@@ -1,40 +1,26 @@
-
 name: CI
 
-# Controla cuándo se ejecutará el flujo de trabajo
 on:
-  # Dispara el flujo de trabajo en eventos de push o pull request, pero solo para la rama "main"
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
-  # Permite ejecutar este flujo de trabajo manualmente desde la pestaña Actions
   workflow_dispatch:
 
-# Un flujo de trabajo está compuesto de uno o más trabajos que pueden ejecutarse secuencial o paralelamente
 jobs:
-  # Este flujo de trabajo contiene un solo trabajo llamado "build"
   build:
-    # El tipo de runner que ejecutará el trabajo
     runs-on: ubuntu-latest
 
-    # Los pasos representan una secuencia de tareas que se ejecutarán como parte del trabajo
     steps:
-      # Verifica tu repositorio bajo $GITHUB_WORKSPACE, así tu trabajo puede acceder a él
       - uses: actions/checkout@v4
 
-      # Instala las dependencias necesarias
       - name: Instalar dependencias
-        run: |
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
-      # Corre los notebooks
       - name: Ejecutar notebooks
         run: |
           jupyter nbconvert --to notebook --execute notebooks/ArbolDecision.ipynb
           jupyter nbconvert --to notebook --execute notebooks/KNN.ipynb
           jupyter nbconvert --to notebook --execute notebooks/RegresionLineal.ipynb
 
-      # Agrega más pasos aquí según sea necesario
 
